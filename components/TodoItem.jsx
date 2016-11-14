@@ -39,7 +39,7 @@ class TodoItem extends Component {
           </IconButton>
         }
       >
-        <MenuItem primaryText="Edit" onTouchTap={this.handleEdit.bind(this)}/>
+          <MenuItem primaryText="Edit" onTouchTap={this.handleEdit.bind(this)}/>
         <MenuItem primaryText="Delete" onTouchTap={() => deleteTodo(todo.id)}/>
       </IconMenu>
     );

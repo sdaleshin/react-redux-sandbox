@@ -7,9 +7,3 @@ body {
   line-height: 20px;
   margin: 0px;
 }
-
-.container{
-  max-width: 1000px;
-  margin: auto;
-  padding: 40px 30px;
-}

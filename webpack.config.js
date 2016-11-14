@@ -4,6 +4,7 @@ module.exports = {
     jsx: "./src/index.jsx",
     css: "./src/main.css",
     html: "./src/index.html",
+    data: "./data/data.json"
   },
 
   output: {
@@ -17,6 +18,7 @@ module.exports = {
     ],
     loaders: [
       { test: /\.html$/, loader: "file?name=[name].[ext]" },
+      { test: /\.json$/, loader: "file?name=[name].[ext]" },
       { test: /\.css$/, loader: "file?name=[name].[ext]" },
       { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["react-hot","babel-loader"]},
     ],
