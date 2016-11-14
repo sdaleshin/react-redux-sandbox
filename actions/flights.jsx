@@ -22,11 +22,3 @@ export function setCarrierFilter(carrier){
   return { type: types.SET_CARRIER_FILTER, carrier}
 }
 
-export function getFilteredFlights(filter) {
-  return { type: types.REQUEST_FILTERED_FLIGHTS, filter};
-}
-
-export function getCarriers() {
-  return { type: types.REQUEST_CARRIERS };
-}
-

@@ -16,8 +16,6 @@ const initialState = {
 
 export default function flights(state = initialState, action) {
     switch (action.type) {
-        case REQUEST_ALL_FLIGHTS:
-            return state;
         case RECEIVE_ALL_FLIGHTS:
             let carriers = action.allFlights.map(f => f.carrier);
             return Object.assign({}, state, {
