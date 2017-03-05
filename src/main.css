@@ -9,7 +9,15 @@ body {
 }
 
 .container{
-  max-width: 1000px;
-  margin: auto;
-  padding: 40px 30px;
+  /*max-width: 1000px;*/
+  /*margin: auto;*/
+  /*padding: 40px 30px;*/
+}
+
+.menu-link{
+  text-decoration: none;
+}
+
+.main-region{
+  margin-left: 300px;
 }

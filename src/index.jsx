@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
+import {Router, Redirect, Route, browserHistory} from 'react-router';
+import {defaultRoute} from '../config/config'
 
 import App from '../containers/App';
 import configureStore from '../store/configureStore';
@@ -10,16 +12,16 @@ import configureStore from '../store/configureStore';
 window.React = React;
 
 //Needed for onTouchTap
-//Can go away when react 1.0 release
-//Check this repo:
-//https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Redirect from="/" to={defaultRoute}/>
+            <Route path="/:filter" component={App}/>
+        </Router>
+    </Provider>,
+    document.getElementById("root")
 );
