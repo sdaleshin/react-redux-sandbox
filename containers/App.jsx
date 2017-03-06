@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as FlightActions from '../actions/flights';
 import * as UserActions from '../actions/users';
 import LeftMenu from '../components/LeftMenu';
 import AppBar from 'material-ui/AppBar'
@@ -44,7 +43,6 @@ App.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        flights: state.flights,
         menu: state.menu,
         users: state.users
     };
