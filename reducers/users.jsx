@@ -7,14 +7,7 @@ import {
     GET_USERS
 } from '../constants/ActionTypes';
 const initialState = {
-    allUsers: [{
-        id: 1,
-        fullName: 'Maria Sankina',
-        birthdate: '02.02.1990',
-        address: '1-13 St Giles High St',
-        city: 'London',
-        phone: '+79151238574'
-    }],
+    allUsers: [],
     open: false
 };
 
@@ -53,7 +46,9 @@ export default function users(state = initialState, action) {
                 allUsers: [...state.allUsers.filter((u) => u.id !== action.userId)]
             });
         case GET_USERS:
-            return state;
+            return Object.assign({}, state, {
+                allUsers: action.users
+            });
         default:
             return state;
     }

@@ -16,6 +16,10 @@ injectTapEventPlugin();
 
 const store = configureStore();
 
+store.subscribe(()=>{
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()))
+});
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={browserHistory}>

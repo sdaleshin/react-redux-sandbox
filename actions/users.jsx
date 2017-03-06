@@ -22,5 +22,10 @@ export function deleteUser(userId) {
 
 export function getUsers() {
     let users = [];
+    let reduxState = localStorage.getItem('reduxState');
+    if(reduxState){
+        reduxState = JSON.parse(reduxState);
+        users = reduxState.users.allUsers;
+    }
     return {type: types.GET_USERS, users}
 }

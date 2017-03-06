@@ -6,6 +6,10 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import UserModal from './UserModal'
 
 class Users extends Component {
+    componentWillMount() {
+        this.props.actions.getUsers();
+    }
+
     handleAdd = () => {
         this.props.actions.showUserModal();
     };
