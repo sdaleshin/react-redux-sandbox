@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import moment from 'moment'
 
 const validationRules = {
     fullName(value){
@@ -17,7 +19,7 @@ const validationRules = {
     },
     phone(value) {
         let pattern = /^((\+7|7|8)+([0-9]){10})$/gm;
-        if(value && !pattern.test(value)){
+        if (value && !pattern.test(value)) {
             return 'Incorrect phone format'
         }
 
@@ -38,23 +40,25 @@ class UserForm extends Component {
     }
 
     handleBlur = (e) => {
-        const field = e.target.name;
-        this.validateField(field);
+        this.validateField(e.target.name);
     };
 
-    validateField(field){
+    validateField(field) {
         let errorText = this.validate(field);
         let fieldErrorText = {};
         fieldErrorText[field] = errorText;
         this.setState({errorTexts: Object.assign({}, this.state.errorTexts, fieldErrorText)});
     };
 
-    handleChange = (e) => {
-        const field = e.target.name;
+    handleFieldChange = (field, value) => {
         const user = this.props.user;
-        user[field] = e.target.value;
+        user[field] = value;
         this.props.onChange(user, this.isValid());
         this.validateField(field);
+    };
+
+    handleChange = (e) => {
+        this.handleFieldChange(e.target.name, e.target.value);
     };
 
     validate = (field) => {
@@ -63,6 +67,14 @@ class UserForm extends Component {
 
     isValid = () => {
         return !this.validate('fullName') && !this.validate('birthdate') && !this.validate('phone');
+    };
+
+    handleDateChange = (e, date) => {
+        this.handleFieldChange('birthdate', date);
+    };
+
+    handleDatePickerDismiss = () => {
+        this.validateField('birthdate');
     };
 
     renderTextField(user, errorTexts, label, field) {
@@ -84,13 +96,29 @@ class UserForm extends Component {
     render() {
         let {user}= this.props;
         let {errorTexts} = this.state;
+        let minDate = new Date();
+        minDate.setFullYear(1900);
+
+        let maxDate = new Date();
+        let {birthdate} = user;
+        if(birthdate){
+            birthdate = moment(user['birthdate']).toDate()
+        }
 
         return (
             <div>
                 {this.renderTextField(user, errorTexts, 'Full Name', 'fullName')}
                 <br />
-                {this.renderTextField(user, errorTexts, 'Birthdate')}
-                <br />
+                <DatePicker
+                    floatingLabelText="Birthdate"
+                    name="birthdate"
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    value={birthdate}
+                    onChange={this.handleDateChange}
+                    onDismiss={this.handleDatePickerDismiss}
+                    errorText={errorTexts['birthdate']}
+                />
                 {this.renderTextField(user, errorTexts, 'Address')}
                 <br />
                 {this.renderTextField(user, errorTexts, 'City')}

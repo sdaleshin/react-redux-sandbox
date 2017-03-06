@@ -13,7 +13,7 @@ const initialState = {
 
 const userInitialState = {
     fullName: '',
-    birthdate: '',
+    birthdate: null,
     address: '',
     city: '',
     phone: ''

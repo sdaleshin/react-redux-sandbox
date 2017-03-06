@@ -3,6 +3,7 @@ import {Table, TableHeader, TableRow, TableHeaderColumn, TableBody, TableRowColu
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import moment from 'moment'
 import UserModal from './UserModal'
 
 class Users extends Component {
@@ -60,7 +61,7 @@ class Users extends Component {
                         {allUsers.map((row, index) => (
                             <TableRow key={index}>
                                 <TableRowColumn>{row.fullName}</TableRowColumn>
-                                <TableRowColumn>{row.birthdate}</TableRowColumn>
+                                <TableRowColumn>{moment(row.birthdate).format('L')}</TableRowColumn>
                                 <TableRowColumn>{row.address}</TableRowColumn>
                                 <TableRowColumn>{row.city}</TableRowColumn>
                                 <TableRowColumn>{row.phone}</TableRowColumn>
