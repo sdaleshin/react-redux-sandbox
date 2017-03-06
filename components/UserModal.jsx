@@ -1,14 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
+import UserForm from './UserForm'
 
 class UserModal extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            user: this.props.user
+            user: Object.assign({},this.props.user)
         };
     }
 
@@ -16,8 +16,13 @@ class UserModal extends Component {
         this.props.onCancelClick();
     };
     handleSubmit = () =>{
-        this.props.onSubmitClick();
+        this.props.onSubmitClick(this.state.user);
     };
+
+    handleChange = (user) => {
+        this.setState({user:user});
+    };
+
     render() {
 
         const actions = [
@@ -35,7 +40,7 @@ class UserModal extends Component {
             />
         ];
 
-        let {user, open} = this.props;
+        let {user, open} = this.state;
 
         return (
             <Dialog
@@ -44,37 +49,7 @@ class UserModal extends Component {
                 open={this.props.open}
                 autoScrollBodyContent={true}
             >
-                <div>
-                    <TextField
-                        hintText="Full Name"
-                        floatingLabelText="Full Name"
-                        value={user.fullName}
-                    />
-                    <br />
-                    <TextField
-                        hintText="Birthdate"
-                        floatingLabelText="Birthdate"
-                        value={user.birthdate}
-                    />
-                    <br />
-                    <TextField
-                        hintText="Address"
-                        floatingLabelText="Address"
-                        value={user.address}
-                    />
-                    <br />
-                    <TextField
-                        hintText="City"
-                        floatingLabelText="City"
-                        value={user.city}
-                    />
-                    <br />
-                    <TextField
-                        hintText="Phone"
-                        floatingLabelText="Phone"
-                        value={user.phone}
-                    />
-                </div>
+                <UserForm user={user} onChange={this.handleChange}/>
             </Dialog>
         );
     }

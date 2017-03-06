@@ -1,86 +1,51 @@
 import React, {Component, PropTypes} from 'react';
-import FlatButton from 'material-ui/FlatButton';
-import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
-class UserModal extends Component {
+class UserForm extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            user: this.props.user
-        };
-    }
-
-    handleClose = () => {
-        this.setState({open: false});
+    handleChange = (e) => {
+        const field = e.target.name;
+        const user = this.props.user;
+        user[field] = e.target.value;
+        this.props.onChange(user);
     };
 
-    render() {
-
-        const actions = [
-            <FlatButton
-                label="Cancel"
-                primary={true}
-                onTouchTap={this.handleClose}
-            />,
-            <FlatButton
-                label="Submit"
-                type="submit"
-                primary={true}
-                keyboardFocused={true}
-                onTouchTap={this.handleClose}
-            />
-        ];
-
-        let {user, open} = this.props;
+    renderTextField(user, label, field){
+        field = field || label.toLowerCase();
 
         return (
-            <Dialog
-                actions={actions}
-                modal={true}
-                open={open}
-                autoScrollBodyContent={true}
-            >
-                <TextField
-                    key="1"
-                    hintText="Full Name"
-                    floatingLabelText="Full Name"
-                    value={user.fullName}
-                />
+            <TextField
+                hintText={label}
+                floatingLabelText={label}
+                value={user[field]}
+                name={field}
+                onChange={this.handleChange}
+            />
+        )
+    }
+
+    render() {
+        let {user}= this.props;
+
+        return (
+            <div>
+                {this.renderTextField(user, 'Full Name', 'fullName')}
                 <br />
-                <TextField
-                    key="2"
-                    hintText="Birthdate"
-                    floatingLabelText="Birthdate"
-                    value={user.birthdate}
-                />
+                {this.renderTextField(user, 'Birthdate')}
                 <br />
-                <TextField
-                    hintText="Address"
-                    floatingLabelText="Address"
-                    value={user.address}
-                />
+                {this.renderTextField(user, 'Address')}
                 <br />
-                <TextField
-                    hintText="City"
-                    floatingLabelText="City"
-                    value={user.city}
-                />
+                {this.renderTextField(user, 'City')}
                 <br />
-                <TextField
-                    hintText="Phone"
-                    floatingLabelText="Phone"
-                    value={user.phone}
-                />
-            </Dialog>
+                {this.renderTextField(user, 'Phone')}
+            </div>
         );
     }
 }
 
-UserModal.propTypes = {
+UserForm.propTypes = {
     user: PropTypes.object.isRequired,
-    open: PropTypes.bool.isRequired
+    onChange: PropTypes.func.isRequired
 };
 
-export default UserModal;
+export default UserForm;

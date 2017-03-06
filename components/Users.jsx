@@ -6,7 +6,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import UserModal from './UserModal'
 
 class Users extends Component {
-    handleOpen = () => {
+    handleAdd = () => {
         this.props.actions.showUserModal();
     };
 
@@ -14,13 +14,26 @@ class Users extends Component {
         this.props.actions.hideUserModal();
     };
 
-    handleSubmit = () =>{
+    handleEdit = (user) => {
+        this.props.actions.showUserModal(user);
+    };
+
+    handleDelete = (userId) => {
+        this.props.actions.deleteUser(userId);
+    };
+
+    handleSubmit = (user) => {
+        if (user.id) {
+            this.props.actions.updateUser(user);
+        } else {
+            this.props.actions.addUser(user);
+        }
         this.props.actions.hideUserModal();
     };
 
     render() {
 
-        let {allUsers, open} = this.props.users;
+        let {allUsers, open, user} = this.props.users;
 
         return (
             <div>
@@ -48,24 +61,38 @@ class Users extends Component {
                                 <TableRowColumn>{row.city}</TableRowColumn>
                                 <TableRowColumn>{row.phone}</TableRowColumn>
                                 <TableRowColumn>
-                                    <FlatButton label="Edit" primary={true}/>
+                                    <FlatButton
+                                        label="Edit"
+                                        primary={true}
+                                        onTouchTap={() => {
+                                            this.handleEdit(row)
+                                        }}
+                                    />
                                 </TableRowColumn>
                                 <TableRowColumn>
-                                    <FlatButton label="Delete" secondary={true}/>
+                                    <FlatButton
+                                        label="Delete"
+                                        secondary={true}
+                                        onTouchTap={() => {
+                                            this.handleDelete(row.id)
+                                        }}
+                                    />
                                 </TableRowColumn>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-                <FloatingActionButton onTouchTap={this.handleOpen} style={{position: 'fixed', bottom: 30, right: 30}}>
+                <FloatingActionButton onTouchTap={this.handleAdd} style={{position: 'fixed', bottom: 30, right: 30}}>
                     <ContentAdd />
                 </FloatingActionButton>
+                {user &&
                 <UserModal
-                    user={allUsers[0]}
+                    user={user}
                     open={open}
                     onCancelClick={this.handleCancel}
                     onSubmitClick={this.handleSubmit}
                 />
+                }
             </div>
         );
     }
