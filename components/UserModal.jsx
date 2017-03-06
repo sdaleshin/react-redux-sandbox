@@ -8,19 +8,20 @@ class UserModal extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            user: Object.assign({},this.props.user)
+            user: Object.assign({}, this.props.user),
+            disabled: !this.props.user.id
         };
     }
 
     handleCancel = () => {
         this.props.onCancelClick();
     };
-    handleSubmit = () =>{
+    handleSubmit = () => {
         this.props.onSubmitClick(this.state.user);
     };
 
-    handleChange = (user) => {
-        this.setState({user:user});
+    handleChange = (user, isValid) => {
+        this.setState({user: user, disabled: !isValid});
     };
 
     render() {
@@ -37,6 +38,7 @@ class UserModal extends Component {
                 primary={true}
                 keyboardFocused={true}
                 onTouchTap={this.handleSubmit}
+                disabled={this.state.disabled}
             />
         ];
 
