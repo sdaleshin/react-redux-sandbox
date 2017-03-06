@@ -39,16 +39,19 @@ export default function users(state = initialState, action) {
                 user: null
             });
         case UPDATE_USER:
-            let user = state.allUsers.find((el) =>el.id === action.user.id);
-            Object.assign(user, action.user);
-            return state;
+            return Object.assign({}, state, {
+                allUsers: [...state.allUsers.filter((u) => u.id !== action.user.id), action.user].sort((a, b) => a.id - b.id)
+            });
         case ADD_USER:
-            let last = state.allUsers[state.allUsers.length - 1];
+            let last = state.allUsers[state.allUsers.length - 1] || {id: 0};
             action.user.id = last.id + 1;
-            state.allUsers.push(action.user);
-            return state;
+            return Object.assign({}, state, {
+                allUsers: [...state.allUsers, action.user]
+            });
         case DELETE_USER:
-            return state;
+            return Object.assign({}, state, {
+                allUsers: [...state.allUsers.filter((u) => u.id !== action.userId)]
+            });
         case GET_USERS:
             return state;
         default:
