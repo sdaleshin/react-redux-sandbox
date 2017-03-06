@@ -1,1 +1,1 @@
-export let defaultRoute = 'departments'
+export let defaultRoute = 'users'

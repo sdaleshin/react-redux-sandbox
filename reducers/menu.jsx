@@ -1,5 +1,5 @@
 const initialState = {
-    leftMenu:['Departments','Employees']
+    leftMenu:['Users']
 };
 
 export default function menu(state = initialState, action) {

@@ -2,10 +2,10 @@ import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as FlightActions from '../actions/flights';
+import * as UserActions from '../actions/users';
 import LeftMenu from '../components/LeftMenu';
 import AppBar from 'material-ui/AppBar'
-import Departments from '../components/Departments'
-import Employees from '../components/Employees'
+import Users from '../components/Users'
 
 // For Customization Options, edit  or use
 // './src/material_ui_raw_theme_file.jsx' as a template.
@@ -15,17 +15,7 @@ import theme from '../src/material_ui_raw_theme_file'
 class App extends Component {
 
     render() {
-        const {actions, menu, params, departments, employees} = this.props;
-
-        let grid;
-        switch (params.filter){
-            case 'departments':
-                grid = <Departments departments={departments}/>
-                break;
-            case 'employees':
-                grid = <Employees employees={employees} departments={departments}/>
-                break;
-        }
+        const {actions, menu, params, users} = this.props;
 
         return (
             <div className="container">
@@ -37,7 +27,7 @@ class App extends Component {
                         />
                         <LeftMenu menu={menu}/>
                         <div className="main-region">
-                            {grid}
+                            <Users users={users} actions={actions}/>
                         </div>
                     </div>
                 </MuiThemeProvider>
@@ -47,7 +37,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-    flights: PropTypes.object.isRequired,
+    users: PropTypes.object.isRequired,
     menu: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
 };
@@ -55,13 +45,14 @@ App.propTypes = {
 function mapStateToProps(state) {
     return {
         flights: state.flights,
-        menu: state.menu
+        menu: state.menu,
+        users: state.users
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(FlightActions, dispatch)
+        actions: bindActionCreators(UserActions, dispatch)
     };
 }
 

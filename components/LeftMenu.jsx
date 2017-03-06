@@ -23,7 +23,7 @@ class LeftMenu extends Component {
 
         return (
             <Drawer open={true}>
-                <AppBar title="Admin"/>
+                <AppBar title="Admin" />
                 <SelectableList value={location.pathname}>
                     {listItems}
                 </SelectableList>
